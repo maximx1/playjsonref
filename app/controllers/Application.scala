@@ -6,7 +6,8 @@ import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import com.github.tototoshi.play2.json4s.jackson._
 
-case class Person(name: String, age: Int, things: List[Thing])
+case class FormattedResponse( person: Person)
+case class Person(name: String, age: Option[Int], things: List[Thing])
 case class Thing(id: Int, description: String)
 
 object Application extends Controller with Json4s {
@@ -21,4 +22,14 @@ object Application extends Controller with Json4s {
     Ok(views.html.displayPerson(request.body.extract[Person]))
   }
 
+  def apiReturnTest = Action { implicit request =>
+    Ok(Extraction.decompose(samplePerson))
+  }
+
+  def apiReturnTestFormatted = Action { implicit request =>
+    Ok(Extraction.decompose(sampleFormatted))
+  }
+
+  lazy val sampleFormatted = FormattedResponse(samplePerson)
+  lazy val samplePerson = Person("Sample name", Some(24), List(Thing(1, "Thing 1"), Thing(2, "Thing 2"), Thing(3, "Thing 4")))
 }

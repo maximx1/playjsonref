@@ -4,6 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /api                        controllers.Application.apiReturnTest
+GET     /apiForm                    controllers.Application.apiReturnTestFormatted
 POST    /api                        controllers.Application.apiTest
 
 # Map static resources from the /public folder to the /assets URL path
